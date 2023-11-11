@@ -1,0 +1,25 @@
+{
+  "name": "happy-diwali",
+  "version": "0.0.1",
+  "description": "Wish everyone a happy Diwali in style.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goforaditya/happy-diwali-js.git"
+  },
+  "keywords": [
+    "ai",
+    "diwali",
+    "wish",
+    "chatgpt"
+  ],
+  "author": "@goforaditya",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/goforaditya/happy-diwali-js/issues"
+  },
+  "homepage": "https://github.com/goforaditya/happy-diwali-js#readme"
+}
