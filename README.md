@@ -20,6 +20,7 @@ This script uses the `whatsapp-web.js` library to send a Diwali greeting and a g
 ## Configuration
 
 # Uses whatsapp-js
+`whatsapp-web.js` https://wwebjs.dev/ Scan QR code for login using whatsapp
 
 Create a `.env` file in the root of your project and insert your key-value pairs in the following format of `NAME=VALUE`:
 
