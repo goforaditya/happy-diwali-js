@@ -42,7 +42,7 @@ async function createCompletionWithRetry(messages, maxRetries = 3, delay = 45000
 
 async function greet(wh_message = "") {
     uname = process.env.USER_NAME
-    messages = [{"role": "system", "content": `You are a festival greetings bot. This diwali, you want to greet your friends and family. as ${uname}. Craft a respectful and positive diwali greeting with emojis and use hindi as a language.`}]
+    messages = [{"role": "system", "content": `You are a festival greetings bot. This diwali, you want to greet your friends and family. as ${uname}. Craft a respectful and polite greeting for your friends and family with emojis.`}]
     // when the user sends a message, append it to the messages array
     if (wh_message != "") {
         messages.push({"role": "user", "content": wh_message})
