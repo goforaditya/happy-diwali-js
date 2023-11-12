@@ -47,7 +47,7 @@ wh_client.on('ready', async () => {
         console.log(`\nPICTURE IS : ==> ${picture}\n`)
         const media = MessageMedia.fromFilePath(picture);
         await chat.sendMessage(media);
-        await chat.sendMessage("Made by  using OpenAI's DALL-E and GPT-3.5 ")
+        await chat.sendMessage("Made by https://goforaditya.github.io/happy-diwali-js/ using OpenAI's DALL-E and GPT-3.5 ")
     }
 });
 
