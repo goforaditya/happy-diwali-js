@@ -52,7 +52,6 @@ wh_client.on('ready', async () => {
     if (all_numbers == "yes") {
 
         for (let contact of contacts) {
-            let contact = await wh_client.getContactById(number)
             let chat = await contact.getChat()
             console.log(`\nCHAT IS : ==> ${JSON.stringify(chat)}\n`)
             greeting = await greet()
@@ -71,6 +70,7 @@ wh_client.on('ready', async () => {
         for (let number of initial_numbers) {
             // get contact by id
             let contact = await wh_client.getContactById(number)
+            console.log(`\nCONTACT IS : ==> ${JSON.stringify(contact.id)}\n`)
             let chat = await contact.getChat()
             console.log(`\nCHAT IS : ==> ${JSON.stringify(chat)}\n`)
             greeting = await greet()
