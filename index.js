@@ -11,7 +11,7 @@ require('dotenv').config();
 
 // Load FAVORITE_NUMBERS from process.env and split it into an array of strings
 const initial_numbers = process.env.FAVORITE_NUMBERS.split(',');
-
+const all_numbers = process.env.SEND_ALL_CONTACTS
 // Print the favorite numbers using a for loop
 for (let i = 0; i < initial_numbers.length; i++) {
     console.log(initial_numbers[i]);
@@ -36,18 +36,52 @@ wh_client.initialize();
 
 wh_client.on('ready', async () => {
     // console.log('MSG CREATE', msg.body);
-    for (let number of initial_numbers) {
-        let contact = await wh_client.getContactById(number)
-        let chat = await contact.getChat()
-        console.log(`\nCHAT IS : ==> ${JSON.stringify(chat)}\n`)
-        greeting = await greet()
-        console.log(`\nGREETING IS : ==> ${greeting}\n`)
-        await chat.sendMessage(greeting)
-        const picture = await makeDiwaliPicture(contact)
-        console.log(`\nPICTURE IS : ==> ${picture}\n`)
-        const media = MessageMedia.fromFilePath(picture);
-        await chat.sendMessage(media);
-        await chat.sendMessage("Made by https://goforaditya.github.io/happy-diwali-js/ using OpenAI's DALL-E and GPT-3.5 ")
+    // get list of all contacts
+    const contacts = await wh_client.getContacts();
+
+    if (contacts.length == 0) {
+        console.log("No contacts found")
+        return
+    }
+
+    if (initial_numbers.length == 0) {
+        console.log("No numbers found")
+        return
+    }
+
+    if (all_numbers == "yes") {
+
+        for (let contact of contacts) {
+            let contact = await wh_client.getContactById(number)
+            let chat = await contact.getChat()
+            console.log(`\nCHAT IS : ==> ${JSON.stringify(chat)}\n`)
+            greeting = await greet()
+            console.log(`\nGREETING IS : ==> ${greeting}\n`)
+            await chat.sendMessage(greeting)
+            const picture = await makeDiwaliPicture(contact)
+            console.log(`\nPICTURE IS : ==> ${picture}\n`)
+            const media = MessageMedia.fromFilePath(picture);
+            await chat.sendMessage(media);
+            await chat.sendMessage("Made by https://goforaditya.github.io/happy-diwali-js/ using OpenAI's DALL-E and GPT-3.5 ")
+        }
+
+
+    } else {
+        // loop initial_numbers and send message to each number
+        for (let number of initial_numbers) {
+            // get contact by id
+            let contact = await wh_client.getContactById(number)
+            let chat = await contact.getChat()
+            console.log(`\nCHAT IS : ==> ${JSON.stringify(chat)}\n`)
+            greeting = await greet()
+            console.log(`\nGREETING IS : ==> ${greeting}\n`)
+            await chat.sendMessage(greeting)
+            const picture = await makeDiwaliPicture(contact)
+            console.log(`\nPICTURE IS : ==> ${picture}\n`)
+            const media = MessageMedia.fromFilePath(picture);
+            await chat.sendMessage(media);
+            await chat.sendMessage("Made by https://goforaditya.github.io/happy-diwali-js/ using OpenAI's DALL-E and GPT-3.5 ")
+        }
     }
 });
 

@@ -28,6 +28,9 @@ const openai = new OpenAI({ apiKey: openaiKey });
 //   straightforward and efficient, aiming to provide quick and effective image enhancements. 
 // Just reply with an single image and nothing else.`
 
+const PROMPT = `An indian family celebrating diwali with fireworks and dias at night. and greeting saying happy diwali from Aditya`
+
+
 async function getImageFromUrl(url, path) {
     const response = await fetch(url);
 
