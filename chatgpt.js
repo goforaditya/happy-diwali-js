@@ -22,7 +22,7 @@ async function createCompletionWithRetry(messages, maxRetries = 3, delay = 45000
         model: "gpt-3.5-turbo",
       });
 
-      console.log(completion);
+      // console.log(completion);
       return completion;
     } catch (err) {
       console.log(err);
@@ -48,7 +48,7 @@ async function greet(wh_message = "") {
         messages.push({"role": "user", "content": wh_message})
     }
 
-    console.log(messages)
+    // console.log(messages)
   
     const completion = await createCompletionWithRetry(messages);
   

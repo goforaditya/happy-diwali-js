@@ -53,12 +53,12 @@ async function editImage(path) {
     const result = false;
     sharp(path).toFormat('png').ensureAlpha(IMAGE_ALPHA).resize(IMAGE_SIZE,IMAGE_SIZE).toBuffer().then( data => {
         sharp(data).toFile(newPath, (err, info) => {
-            console.log(info)
+            // console.log(info)
         }).then( () => {
-            console.log("Image converted to png")
+            // console.log("Image converted to png")
             result = newPath;
         }).catch( err => {
-            console.log(err)
+            // console.log(err)
         })
     })
 

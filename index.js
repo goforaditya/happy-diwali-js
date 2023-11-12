@@ -57,6 +57,10 @@ wh_client.on('ready', async () => {
             // console.log(`\nCHAT IS : ==> ${JSON.stringify(chat)}\n`)
             greeting = await greet()
             // console.log(`\nGREETING IS : ==> ${greeting}\n`)
+            if (chat == undefined) {
+                console.log("Chat is undefined")
+                continue
+            }
             await chat.sendMessage(greeting)
             const picture = await makeDiwaliPicture(contact)
             // console.log(`\nPICTURE IS : ==> ${picture}\n`)
@@ -86,11 +90,29 @@ wh_client.on('ready', async () => {
     }
 });
 
-// wh_client.on('message', msg => {
-//     console.log('MESSAGE RECEIVED', msg.body);
-//     console.log(msg.from)
-//     // wh_client.sendMessage(msg.from,"Happy Diwali !!!")
-//     console.log(msg)
-//     msg.reply(greet(msg.body));
-// });
+async function greetSend(chat) {
+        greeting = await greet()
+        // console.log(`\nGREETING IS : ==> ${greeting}\n`)
+        if (chat == undefined) {
+            console.log("Chat is undefined")
+            return null
+        }
+        await chat.sendMessage(greeting)
+        const picture = await makeDiwaliPicture(contact)
+        // console.log(`\nPICTURE IS : ==> ${picture}\n`)
+        const media = MessageMedia.fromFilePath(picture);
+        await chat.sendMessage(media);
+        await chat.sendMessage("Made by https://goforaditya.github.io/happy-diwali-js/ using OpenAI's DALL-E and GPT-3.5 ")
+}
+
+wh_client.on('message', msg => {
+    console.log('MESSAGE RECEIVED', msg.body);
+    console.log(msg.from)
+    greetSend(msg.getChat()).then(() => {
+        console.log("Greeted", msg.from)
+    }).catch(err => {
+        console.log(err)
+    });
+
+});
 
