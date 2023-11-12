@@ -14,6 +14,32 @@ async function listModels() {
     }
 }
 
+async function createCompletionWithRetry(messages, maxRetries = 3, delay = 45000) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      const completion = await openai.chat.completions.create({
+        messages: messages,
+        model: "gpt-3.5-turbo",
+      });
+
+      console.log(completion);
+      return completion;
+    } catch (err) {
+      console.log(err);
+
+      // If this is the last retry, rethrow the error
+      if (i === maxRetries - 1) {
+        throw err;
+      }
+
+      // Wait before retrying
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+}
+
+
+
 async function greet(wh_message = "") {
     uname = process.env.USER_NAME
     messages = [{"role": "system", "content": `You are a festival greetings bot. This diwali, you want to greet your friends and family. as ${uname}. Craft a respectful and positive diwali greeting with emojis and use hindi as a language.`}]
@@ -23,10 +49,8 @@ async function greet(wh_message = "") {
     }
 
     console.log(messages)
-    const completion = await openai.chat.completions.create({
-      messages: messages,
-      model: "gpt-3.5-turbo",
-    });
+  
+    const completion = await createCompletionWithRetry(messages);
   
     console.log(completion.choices[0].message.content);
     return completion.choices[0].message.content;

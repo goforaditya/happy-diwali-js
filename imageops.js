@@ -62,14 +62,37 @@ async function editImage(path) {
     return result;
 }
 
-async function dalleCreate() {
-  const image = await openai.images.generate({ model: "dall-e-3", prompt: PROMPT });
+async function dalleCreate(maxRetries = 3, delay = 45000) {
+    for (let i = 0; i < maxRetries; i++) {
+        try {
+            const image = await openai.images.generate({ model: "dall-e-3", prompt: PROMPT });
 
-  console.log(image.data);
-  if (image.data[0].url) {
-    return image.data[0].url;
-  }
+            console.log(image.data);
+            if (image.data[0].url) {
+                return image.data[0].url;
+            }
+        } catch (err) {
+            console.log(err);
+
+            // If this is the last retry, rethrow the error
+            if (i === maxRetries - 1) {
+                throw err;
+            }
+
+            // Wait before retrying
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+    }
 }
+
+// async function dalleCreate() {
+//   const image = await openai.images.generate({ model: "dall-e-3", prompt: PROMPT });
+
+//   console.log(image.data);
+//   if (image.data[0].url) {
+//     return image.data[0].url;
+//   }
+// }
 
 async function makeDiwaliPicture(contact) {
     const dalle_url = await dalleCreate();
